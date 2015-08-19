@@ -21,7 +21,7 @@ var net = require('net'),
     currentIp = '';
     
 var options = args([
-    { name: "server", alias: "s", type: String, defaultValue: 'tdc2.turningdigital.com' },
+    { name: "server", alias: "s", type: String, defaultValue: 'your.server.com' },
     { name: "port", alias: "p", type: Number, defaultValue: 1337 },
     { name: "interval", alias: "i", type: Number, defaultValue: 5 }
 ]).parse();
