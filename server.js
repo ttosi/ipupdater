@@ -19,7 +19,7 @@ var net = require('net'),
     http = require('http'),
     args = require('command-line-args'),
     moment = require('moment'),
-	currentIp = '';
+	currentIp = 'N/A';
     
 var options = args([
     { name: 'tcp-port', alias: 't', type: Number, defaultValue: 1337 },
@@ -37,3 +37,4 @@ http.createServer(function (req, res) {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('Current IP Address: ' + currentIp);
 }).listen(options['http-port']);
+
