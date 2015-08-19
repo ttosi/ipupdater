@@ -1,0 +1,14 @@
+{
+  "name": "ipupdater",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ipudater.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tony S. Tosi",
+  "license": "ISC",
+  "devDependencies": {
+    "public-ip": "^1.0.3"
+  }
+}
