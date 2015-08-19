@@ -26,7 +26,7 @@ var options = args([
     { name: "interval", alias: "i", type: Number, defaultValue: 5 }
 ]).parse();
 
-if(!options.server) {
+if(!options['server']) {
     console.log('The ipupdater\'s server address required: node server.js --server, -s <server address>');
     return false;
 }
@@ -35,7 +35,7 @@ setInterval(function () {
     publicIp(function (err, ip) {
         if(ip !== currentIp) {
             var client = new net.Socket();
-            client.connect(options.port, options.server, function () {
+		client.connect(options['port'], options['server'], function () {
                 client.write(ip);
                 currentIp = ip;
 
@@ -43,5 +43,5 @@ setInterval(function () {
             });
         }
     });
-}, options.interval * 60000);
+}, options['interval'] * 60000);
 
