@@ -9,6 +9,7 @@
   "author": "Tony S. Tosi",
   "license": "ISC",
   "devDependencies": {
+    "command-line-args": "^1.0.0",
     "public-ip": "^1.0.3"
   }
 }
