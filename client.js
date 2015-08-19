@@ -35,9 +35,9 @@ setInterval(function () {
     publicIp(function (err, ip) {
         if(ip !== currentIp) {
             var client = new net.Socket();
-		client.connect(options['port'], options['server'], function () {
-                client.write(ip);
-			    currentIp = ip;
+			client.connect(options['port'], options['server'], function () {
+				client.write(ip);
+				currentIp = ip;
 
                 client.destroy();
             });
