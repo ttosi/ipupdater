@@ -23,7 +23,7 @@ var net = require('net'),
 var options = args([
     { name: "server", alias: "s", type: String },
     { name: "port", alias: "p", type: Number, defaultValue: 1337 },
-    { name: "interval", alias: "i", type: Number, defaultValue: 300000 }
+    { name: "interval", alias: "i", type: Number, defaultValue: 5 }
 ]).parse();
 
 if(!options.server) {
@@ -43,5 +43,5 @@ setInterval(function () {
             });
         }
     });
-}, options.interval);
+}, options.interval * 60000);
 
