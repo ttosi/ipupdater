@@ -17,15 +17,21 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 var net = require('net'),
     http = require('http'),
+    args = require("command-line-args"),
     currentIp = '';
+	
+var options = args([
+    { name: "tcpport", alias: "t", type: Number, defaultValue: 1337 },
+    { name: "httpport", alias: "h", type: Number, defaultValue: 1338 },
+]).parse();
 
 var server = net.createServer(function (socket) {
     socket.on('data', function (data) {
         currentIp = data + '';
     });
-}).listen(1337);
+}).listen(options.tcpport);
 
 http.createServer(function (req, res) {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('Current IP Address: ' + currentIp);
-}).listen(1338);
+}).listen(options.httpport);
