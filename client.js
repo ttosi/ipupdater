@@ -27,7 +27,7 @@ var options = args([
 ]).parse();
 
 if(!options.server) {
-    console.log('ipupdater server address required: --server, -s <server address>');
+    console.log('The ipupdater\'s server address required: node server.js --server, -s <server address>');
     return false;
 }
 
