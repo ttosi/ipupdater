@@ -18,8 +18,9 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 var net = require('net'),
     http = require('http'),
     args = require('command-line-args'),
+	moment = require('moment'),
     currentIp = '';
-	
+    
 var options = args([
     { name: 'tcp-port', alias: 't', type: Number, defaultValue: 1337 },
     { name: 'http-port', alias: 'h', type: Number, defaultValue: 1338 },
@@ -27,7 +28,8 @@ var options = args([
 
 var server = net.createServer(function (socket) {
     socket.on('data', function (data) {
-        currentIp = data + '';
+        var timestamp = moment(new Date()).format('MM-DD-YYYY hh:mm:ss A');
+		currentIp = data + ' (updated ' + timestamp + ')';
     });
 }).listen(options['tcp-port']);
 
