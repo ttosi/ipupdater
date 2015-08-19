@@ -1,13 +1,13 @@
 {
   "name": "ipupdater",
   "version": "1.0.0",
-  "description": "",
-  "main": "ipudater.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "Monitors a public IP address and reports it to the server",
   "author": "Tony S. Tosi",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ttosi/ipupdater.git"
+  },
   "devDependencies": {
     "command-line-args": "^1.0.0",
     "public-ip": "^1.0.3"
