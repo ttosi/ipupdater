@@ -27,7 +27,7 @@ var options = args([
 ]).parse();
 
 if(!options['server']) {
-    console.log('The ipupdater\'s server address required: node server.js --server, -s <server address>');
+    console.log('Server address is required: node server.js --server, -s <server address>');
     return false;
 }
 
@@ -36,9 +36,9 @@ setInterval(function () {
         if(ip !== currentIp) {
             var client = new net.Socket();
             client.connect(options['port'], options['server'], function () {
-                client.write(ip);
                 currentIp = ip;
-
+				
+                client.write(currentIp);
                 client.destroy();
             });
         }
