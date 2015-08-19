@@ -37,7 +37,7 @@ setInterval(function () {
             var client = new net.Socket();
 		client.connect(options['port'], options['server'], function () {
                 client.write(ip);
-                currentIp = ip;
+			    currentIp = ip;
 
                 client.destroy();
             });
