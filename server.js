@@ -22,9 +22,9 @@ var net = require('net'),
 var	formattedIp = 'Initializing',
 	currentIp = '';
 	
-var sendGrid = require('sendgrid')('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'),
+var sendGrid = require('sendgrid')('API-KEY'),
 	sendGridHelper = require('sendgrid').mail,
-	email = new sendGridHelper.Email('ttosi519@gmail.com'),
+	email = new sendGridHelper.Email('EMAIL'),
 	subject = 'Home IP Address Changed';
     
 var options = args([
