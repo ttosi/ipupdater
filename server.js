@@ -14,6 +14,8 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
 NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
+
+require('dotenv').config()
 var net = require('net'),
     http = require('http'),
     args = require('command-line-args'),
@@ -22,10 +24,10 @@ var net = require('net'),
 var	formattedIp = 'Initializing',
 	currentIp = '';
 	
-var sendGrid = require('sendgrid')('SENDGRID-API-KEY'),
+var sendGrid = require('sendgrid')(process.env.SENDGRID_APIKEY),
 	sendGridHelper = require('sendgrid').mail,
-	email = new sendGridHelper.Email('EMAILm'),
-	subject = 'Home IP Address Changed';
+	email = new sendGridHelper.Email(process.env.EMAIL_TO),
+	subject = process.env.EMAIL_SUBJECT;
     
 var options = args([
     { name: 'tcp-port', alias: 't', type: Number, defaultValue: 1337 },
@@ -51,9 +53,6 @@ var server = net.createServer(function (socket) {
 
 			sendGrid.API(request, function(error, response) {
 				currentIp = data;
-				console.log(response.statusCode);
-				// console.log(response.body)
-				// console.log(response.headers)
 			});
 		}
 		

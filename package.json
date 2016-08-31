@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "command-line-args": "^1.0.0",
+    "dotenv": "^2.0.0",
     "moment": "^2.10.6",
     "nodemailer": "^2.5.0",
     "public-ip": "^1.0.3",
