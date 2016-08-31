@@ -4,6 +4,11 @@ ipupdater is useful when you have a server or a home computer that lives on a in
 
 ## Install
 
-
-
+.env file
+```
+NODE_ENV=dev
+SENDGRID_APIKEY=<Sendgrid_API_Key>
+EMAIL_TO=<Recipient>
+EMAIL_SUBJECT='Home IP Address Changed'
+```
 
