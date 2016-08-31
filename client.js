@@ -15,6 +15,7 @@ NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
+require('dotenv').config()
 var net = require('net'),
     publicIp = require('public-ip'),
     args = require('command-line-args'),
@@ -23,11 +24,6 @@ var net = require('net'),
 var currentIp = '';
 
 var options = args([{
-    name: 'server',
-    alias: 's',
-    type: String,
-    defaultValue: 'tdc2.turningdigital.com'
-}, {
     name: 'port',
     alias: 'p',
     type: Number,
@@ -38,11 +34,6 @@ var options = args([{
     type: Number,
     defaultValue: 5
 }]).parse();
-
-if (!options['server']) {
-    log.warn('Server address is required: node server.js --server, -s <server address>');
-    return false;
-}
 
 log.info('starting ipupdater');
 log.info(options);
@@ -59,7 +50,7 @@ function checkIp() {
 
             var client = new net.Socket();
 
-            client.connect(options['port'], options['server'], function() {
+            client.connect(options['port'], process.env.SERVER_ADDRESS, function() {
                 currentIp = ip;
                 client.write(currentIp);
                 client.destroy();
