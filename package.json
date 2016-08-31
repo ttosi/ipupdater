@@ -11,7 +11,11 @@
   "devDependencies": {
     "command-line-args": "^1.0.0",
     "log4js": "^0.6.38",
+    "dotenv": "^2.0.0",
     "moment": "^2.10.6",
-    "public-ip": "^1.0.3"
+    "nodemailer": "^2.5.0",
+    "public-ip": "^1.0.3",
+    "sendgrid": "^4.0.1",
+    "twilio": "^2.9.2"
   }
 }

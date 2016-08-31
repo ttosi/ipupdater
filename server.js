@@ -15,11 +15,19 @@ NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
+require('dotenv').config()
 var net = require('net'),
     http = require('http'),
     args = require('command-line-args'),
-    moment = require('moment'),
-	currentIp = 'N/A';
+    moment = require('moment');
+	
+var	formattedIp = 'Initializing',
+	currentIp = '';
+	
+var sendGrid = require('sendgrid')(process.env.SENDGRID_APIKEY),
+	sendGridHelper = require('sendgrid').mail,
+	email = new sendGridHelper.Email(process.env.EMAIL_TO),
+	subject = process.env.EMAIL_SUBJECT;
     
 var options = args([
     { name: 'tcp-port', alias: 't', type: Number, defaultValue: 1337 },
@@ -29,12 +37,32 @@ var options = args([
 var server = net.createServer(function (socket) {
     socket.on('data', function (data) {
         var timestamp = moment(new Date()).format('MM-DD-YYYY hh:mm:ss A');
-        currentIp = data + ' (updated ' + timestamp + ')';
+		formattedIp = data + ' (updated ' + timestamp + ')';
+		
+		console.log('formattedIp (socket): ' + formattedIp);
+		
+		if(data !== currentIp) {
+			var content = new sendGridHelper.Content('text/plain', 'New IP Address: ' + formattedIp);
+			var mail = new sendGridHelper.Mail(email, subject, email, content);
+			
+			var request = sendGrid.emptyRequest({
+				method: 'POST',
+				path: '/v3/mail/send',
+				body: mail.toJSON()
+			});
+
+			sendGrid.API(request, function(error, response) {
+				currentIp = data;
+			});
+		}
+		
     });
 }).listen(options['tcp-port']);
 
 http.createServer(function (req, res) {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Current IP Address: ' + currentIp);
+    res.end('Current IP Address: ' + formattedIp);
+	
+	console.log('formattedIp (http): ' + formattedIp);
 }).listen(options['http-port']);
 
