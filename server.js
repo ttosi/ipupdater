@@ -22,9 +22,9 @@ var net = require('net'),
 var	formattedIp = 'Initializing',
 	currentIp = '';
 	
-var sendGrid = require('sendgrid')('API-KEY'),
+var sendGrid = require('sendgrid')('SENDGRID-API-KEY'),
 	sendGridHelper = require('sendgrid').mail,
-	email = new sendGridHelper.Email('EMAIL'),
+	email = new sendGridHelper.Email('EMAILm'),
 	subject = 'Home IP Address Changed';
     
 var options = args([
@@ -35,7 +35,9 @@ var options = args([
 var server = net.createServer(function (socket) {
     socket.on('data', function (data) {
         var timestamp = moment(new Date()).format('MM-DD-YYYY hh:mm:ss A');
-		var formattedIp = data + ' (updated ' + timestamp + ')';
+		formattedIp = data + ' (updated ' + timestamp + ')';
+		
+		console.log('formattedIp (socket): ' + formattedIp);
 		
 		if(data !== currentIp) {
 			var content = new sendGridHelper.Content('text/plain', 'New IP Address: ' + formattedIp);
@@ -49,7 +51,7 @@ var server = net.createServer(function (socket) {
 
 			sendGrid.API(request, function(error, response) {
 				currentIp = data;
-				// console.log(response.statusCode)
+				console.log(response.statusCode);
 				// console.log(response.body)
 				// console.log(response.headers)
 			});
@@ -61,5 +63,7 @@ var server = net.createServer(function (socket) {
 http.createServer(function (req, res) {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('Current IP Address: ' + formattedIp);
+	
+	console.log('formattedIp (http): ' + formattedIp);
 }).listen(options['http-port']);
 
