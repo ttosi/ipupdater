@@ -18,30 +18,63 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 var net = require('net'),
     publicIp = require('public-ip'),
     args = require('command-line-args'),
-    currentIp = '';
-    
-var options = args([
-    { name: 'server', alias: 's', type: String, defaultValue: 'tdc2.turningdigital.com' },
-    { name: 'port', alias: 'p', type: Number, defaultValue: 1337 },
-    { name: 'interval', alias: 'i', type: Number, defaultValue: 5 }
-]).parse();
+    log = require('log4js').getLogger();
 
-if(!options['server']) {
-    console.log('Server address is required: node server.js --server, -s <server address>');
+var currentIp = '';
+
+var options = args([{
+    name: 'server',
+    alias: 's',
+    type: String,
+    defaultValue: 'tdc2.turningdigital.com'
+}, {
+    name: 'port',
+    alias: 'p',
+    type: Number,
+    defaultValue: 1337
+}, {
+    name: 'interval',
+    alias: 'i',
+    type: Number,
+    defaultValue: 5
+}]).parse();
+
+if (!options['server']) {
+    log.warn('Server address is required: node server.js --server, -s <server address>');
     return false;
 }
 
-setInterval(function () {
-    publicIp(function (err, ip) {
-        if(ip !== currentIp) {
+log.info('starting ipupdater');
+log.info(options);
+
+function checkIp() {
+    publicIp(function(err, ip) {
+        if (err) {
+            log.error(err);
+            return;
+        }
+
+        if (ip !== currentIp) {
+            log.info('new ip detected');
+
             var client = new net.Socket();
-            client.connect(options['port'], options['server'], function () {
+
+            client.connect(options['port'], options['server'], function() {
                 currentIp = ip;
-				
                 client.write(currentIp);
+                client.destroy();
+
+                log.info('sent new ip: ' + currentIp);
+            });
+
+            client.on('error', function(err) {
+                log.error('' + err);
                 client.destroy();
             });
         }
     });
-}, options['interval'] * 60000);
+}
 
+setInterval(checkIp, options['interval'] * 60000);
+
+checkIp();
