@@ -11,6 +11,7 @@
   "devDependencies": {
     "command-line-args": "^1.0.0",
     "dotenv": "^2.0.0",
+    "godaddy-dns": "^1.0.0",
     "log4js": "^0.6.38",
     "moment": "^2.14.1",
     "public-ip": "^1.0.3",
