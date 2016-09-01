@@ -20,6 +20,7 @@ require('dotenv').config();
 var net = require('net'),
     publicIp = require('public-ip'),
     args = require('command-line-args'),
+    moment = require('moment'),
     log = require('log4js').getLogger();
 
 var sendGrid = require('sendgrid')(process.env.SENDGRID_APIKEY),
@@ -48,6 +49,9 @@ function checkIp() {
         }
 
         if (ip !== currentIp) {
+            var timestamp = moment(new Date()).format('MM-DD-YYYY hh:mm:ss A');
+    		formattedIp = ip + ' (updated ' + timestamp + ')';
+
             var content = new sendGridHelper.Content('text/plain', 'New IP Address: ' + formattedIp);
 			var mail = new sendGridHelper.Mail(email, subject, email, content);
 
