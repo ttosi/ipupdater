@@ -13,3 +13,5 @@ SENDGRID_APIKEY=<Sendgrid_API_Key>
 EMAIL_TO=<Recipient>
 EMAIL_SUBJECT='Home IP Address Changed'
 ```
+
+sudo forever-service install --script standalone.js -e "PATH=/usr/local/bin:\$PATH" ipupdater
