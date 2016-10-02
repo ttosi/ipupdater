@@ -16,5 +16,8 @@
     "moment": "^2.14.1",
     "public-ip": "^1.0.3",
     "sendgrid": "^4.0.1"
+  },
+  "dependencies": {
+    "ip": "^1.1.3"
   }
 }
