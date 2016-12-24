@@ -18,8 +18,10 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 require('dotenv').config();
 
-var net = require('net'), publicIp = require('public-ip'),
-    args = require('command-line-args'), moment = require('moment'),
+var net = require('net'),
+    publicIp = require('public-ip'),
+    args = require('command-line-args'),
+    moment = require('moment'),
     log = require('log4js').getLogger(),
     ip = require('ip');
 
@@ -50,7 +52,8 @@ function checkIp() {
       var timestamp = moment(new Date()).format('MM-DD-YYYY hh:mm A');
       var formattedIp = ip + ' (updated ' + timestamp + ')';
 
-      var content = new sendGridHelper.Content('text/html', 'External Address: ' + formattedIp + '<br />LAN Address: ' + networkIp);
+      var content = new sendGridHelper.Content('text/html',
+        'External Address: ' + formattedIp + '<br />LAN Address: ' + networkIp);
       var mail = new sendGridHelper.Mail(email, subject, email, content);
 
       var request = sendGrid.emptyRequest(
